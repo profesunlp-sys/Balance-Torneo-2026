@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Partenón 2026 — Central</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+:root{
+  --bg:#0d1117;
+  --surface:#161b22;
+  --surface2:#1c2330;
+  --border:#30363d;
+  --text:#e6edf3;
+  --text2:#8b949e;
+  --green:#3fb950;
+  --green-dim:#1a4a25;
+  --blue:#58a6ff;
+  --blue-dim:#1a3a5c;
+  --orange:#f0883e;
+  --orange-dim:#4a2a10;
+  --purple:#bc8cff;
+  --purple-dim:#3a2060;
+  --red:#f85149;
+  --red-dim:#4a1a18;
+  --yellow:#d29922;
+  --yellow-dim:#3a2a08;
+  --gold:#ffd700;
+}
+
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── HEADER ── */
+.header{
+  flex-shrink:0;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:8px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.header-brand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.brand-icon{
+  font-size:20px;
+}
+.brand-name{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:15px;
+  color:var(--gold);
+  letter-spacing:-0.3px;
+}
+.brand-sub{
+  font-size:10px;
+  color:var(--text2);
+  font-weight:500;
+}
+.header-clock{
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text2);
+  background:var(--surface2);
+  padding:4px 10px;
+  border-radius:20px;
+  border:1px solid var(--border);
+}
+
+/* ── NAV TABS ── */
+.nav{
+  flex-shrink:0;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  overflow-x:auto;
+  gap:2px;
+  padding:4px 8px;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav-btn{
+  flex-shrink:0;
+  background:transparent;
+  border:1.5px solid transparent;
+  border-radius:20px;
+  padding:5px 12px;
+  font-size:11px;
+  font-weight:600;
+  color:var(--text2);
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+}
+.nav-btn.active{
+  background:var(--surface2);
+  border-color:var(--border);
+  color:var(--text);
+}
+.nav-btn.active.t-green{border-color:var(--green);color:var(--green);}
+.nav-btn.active.t-blue{border-color:var(--blue);color:var(--blue);}
+.nav-btn.active.t-orange{border-color:var(--orange);color:var(--orange);}
+.nav-btn.active.t-purple{border-color:var(--purple);color:var(--purple);}
+.nav-btn.active.t-red{border-color:var(--red);color:var(--red);}
+.nav-btn.active.t-gold{border-color:var(--gold);color:var(--gold);}
+
+/* ── CONTENT ── */
+.pages{flex:1;overflow:hidden;position:relative;}
+.page{display:none;height:100%;overflow-y:auto;padding:12px;}
+.page.active{display:block;}
+
+/* ── CARDS ── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:12px;
+}
+.card-title{
+  font-family:'Syne',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* ── RESUMEN ── */
+.resumen-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:12px;
+}
+.stat-box{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px 12px;
+}
+.stat-label{font-size:10px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;}
+.stat-value{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+.stat-sub{font-size:10px;color:var(--text2);margin-top:2px;}
+.v-green{color:var(--green);}
+.v-blue{color:var(--blue);}
+.v-orange{color:var(--orange);}
+.v-red{color:var(--red);}
+.v-gold{color:var(--gold);}
+.v-purple{color:var(--purple);}
+
+.saldo-box{
+  background:linear-gradient(135deg,#1a4a25,#0d2a15);
+  border:1px solid var(--green);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+.saldo-box.negativo{
+  background:linear-gradient(135deg,#4a1a18,#2a0d0c);
+  border-color:var(--red);
+}
+.saldo-label{font-size:12px;font-weight:700;color:var(--green);}
+.saldo-box.negativo .saldo-label{color:var(--red);}
+.saldo-value{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--green);}
+.saldo-box.negativo .saldo-value{color:var(--red);}
+
+.turno-resumen{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.turno-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px 12px;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+}
+.turno-row:last-child{border-bottom:none;}
+.turno-name{color:var(--text2);font-weight:500;}
+.turno-amt{font-weight:700;color:var(--text);}
+
+/* ── UPLOAD ZONE ── */
+.upload-zone{
+  border:2px dashed var(--border);
+  border-radius:14px;
+  padding:20px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .2s;
+  margin-bottom:10px;
+}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--blue);background:var(--blue-dim);}
+.upload-zone.loaded{border-color:var(--green);background:var(--green-dim);}
+.upload-btn{
+  background:var(--blue);
+  color:#000;
+  border:none;
+  border-radius:20px;
+  padding:7px 16px;
+  font-weight:700;
+  font-size:12px;
+  cursor:pointer;
+  margin-top:8px;
+  font-family:'DM Sans',sans-serif;
+}
+.upload-icon{font-size:28px;margin-bottom:6px;}
+.upload-label{font-size:12px;color:var(--text2);}
+
+.file-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--green-dim);
+  border:1px solid var(--green);
+  border-radius:20px;
+  padding:4px 10px;
+  font-size:11px;
+  color:var(--green);
+  margin:4px 2px;
+}
+.file-chip button{background:none;border:none;color:var(--green);cursor:pointer;font-size:12px;padding:0;}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;}
+.data-table th{background:var(--surface2);padding:7px 8px;text-align:left;color:var(--text2);font-weight:600;font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.data-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:var(--text);}
+.data-table tr:last-child td{border-bottom:none;}
+.badge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;}
+.badge-green{background:var(--green-dim);color:var(--green);}
+.badge-blue{background:var(--blue-dim);color:var(--blue);}
+.badge-orange{background:var(--orange-dim);color:var(--orange);}
+.badge-red{background:var(--red-dim);color:var(--red);}
+.badge-yellow{background:var(--yellow-dim);color:var(--yellow);}
+.badge-purple{background:var(--purple-dim);color:var(--purple);}
+
+/* ── BUTTONS ── */
+.btn{
+  border:none;
+  border-radius:20px;
+  padding:9px 16px;
+  font-weight:700;
+  font-size:12px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:'DM Sans',sans-serif;
+  transition:transform .1s;
+}
+.btn:active{transform:scale(.97);}
+.btn-green{background:var(--green);color:#000;}
+.btn-blue{background:var(--blue);color:#000;}
+.btn-orange{background:var(--orange);color:#000;}
+.btn-red{background:var(--red);color:#fff;}
+.btn-purple{background:var(--purple);color:#000;}
+.btn-gray{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.btn-gold{background:var(--gold);color:#000;}
+.btn-full{width:100%;justify-content:center;margin-bottom:8px;}
+
+/* ── FORM ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--text2);}
+.form-input,.form-select{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:8px 10px;
+  color:var(--text);
+  font-size:13px;
+  font-family:'DM Sans',sans-serif;
+  width:100%;
+}
+.form-input:focus,.form-select:focus{outline:none;border-color:var(--blue);}
+
+/* ── INSCRIPCIONES ── */
+.club-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.club-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 14px;
+  cursor:pointer;
+  border-bottom:1px solid var(--border);
+}
+.club-nombre{font-weight:700;font-size:13px;}
+.club-deuda{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;}
+.club-body{padding:10px 14px;display:none;}
+.club-body.open{display:block;}
+.nivel-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:5px 0;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+}
+.nivel-row:last-child{border-bottom:none;}
+
+.pago-status{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 8px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:700;
+  cursor:pointer;
+}
+.pago-pendiente{background:var(--red-dim);color:var(--red);}
+.pago-parcial{background:var(--yellow-dim);color:var(--yellow);}
+.pago-completo{background:var(--green-dim);color:var(--green);}
+
+/* ── EGRESOS ── */
+.egreso-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+}
+.egreso-item:last-child{border-bottom:none;}
+.egreso-cat{display:flex;align-items:center;gap:8px;}
+.egreso-monto{font-weight:700;color:var(--red);font-family:'Syne',sans-serif;font-size:14px;}
+.egreso-delete{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;}
+.egreso-delete:hover{color:var(--red);}
+
+/* ── MODAL ── */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:100;
+  justify-content:center;
+  align-items:flex-end;
+  padding:12px;
+}
+.modal.active{display:flex;}
+.modal-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px 20px 16px 16px;
+  padding:20px;
+  width:100%;
+  max-width:480px;
+  max-height:90vh;
+  overflow-y:auto;
+}
+.modal-title{
+  font-family:'Syne',sans-serif;
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.modal-actions{display:flex;gap:8px;margin-top:14px;}
+
+/* ── EXPORTAR ── */
+.export-section{margin-bottom:14px;}
+.export-preview{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  font-size:11px;
+  font-family:monospace;
+  white-space:pre-wrap;
+  max-height:200px;
+  overflow-y:auto;
+  color:var(--text2);
+  margin-bottom:10px;
+}
+
+/* ── EMPTY STATE ── */
+.empty{
+  text-align:center;
+  padding:30px 20px;
+  color:var(--text2);
+}
+.empty-icon{font-size:36px;margin-bottom:8px;}
+.empty-text{font-size:13px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:12px 0;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">
+    <span class="brand-icon">🏛️</span>
+    <div>
+      <div class="brand-name">PARTENÓN 2026</div>
+      <div class="brand-sub">Panel del coordinador</div>
+    </div>
+  </div>
+  <div class="header-clock" id="clock">--:--</div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active t-gold" onclick="goTab('resumen',this)">📊 Resumen</button>
+  <button class="nav-btn" onclick="goTab('entradas',this)">🎫 Entradas</button>
+  <button class="nav-btn" onclick="goTab('buffet',this)">🍰 Buffet</button>
+  <button class="nav-btn" onclick="goTab('inscripciones',this)">📝 Inscripciones</button>
+  <button class="nav-btn" onclick="goTab('egresos',this)">💸 Egresos</button>
+  <button class="nav-btn" onclick="goTab('exportar',this)">📥 Exportar</button>
+</nav>
+
+<div class="pages">
+
+<!-- ══════════ RESUMEN ══════════ -->
+<div id="page-resumen" class="page active">
+
+  <div class="resumen-grid">
+    <div class="stat-box">
+      <div class="stat-label">🎫 Entradas</div>
+      <div class="stat-value v-blue" id="r-entradas">$0</div>
+      <div class="stat-sub" id="r-entradas-sub">0 personas</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">🍰 Buffet</div>
+      <div class="stat-value v-orange" id="r-buffet">$0</div>
+      <div class="stat-sub" id="r-buffet-sub">0 operaciones</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">📝 Inscripciones</div>
+      <div class="stat-value v-purple" id="r-inscripciones">$0</div>
+      <div class="stat-sub" id="r-inscripciones-sub">0 cobradas</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">💸 Egresos</div>
+      <div class="stat-value v-red" id="r-egresos">$0</div>
+      <div class="stat-sub" id="r-egresos-sub">0 registros</div>
+    </div>
+  </div>
+
+  <div class="saldo-box" id="saldo-box">
+    <div>
+      <div class="saldo-label">💰 SALDO DEL DÍA</div>
+      <div style="font-size:10px;color:#3fb950;margin-top:2px;">Ingresos − Egresos</div>
+    </div>
+    <div class="saldo-value" id="r-saldo">$0</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--blue);">🎫 Entradas por turno</div>
+    <div class="turno-resumen" id="turno-resumen">
+      <div class="turno-row"><span class="turno-name">Sin datos cargados</span><span class="turno-amt">—</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--text2);">📊 Efectivo vs Transferencia</div>
+    <div class="resumen-grid" style="margin-bottom:0;">
+      <div class="stat-box">
+        <div class="stat-label">💵 Total efectivo</div>
+        <div class="stat-value v-green" id="r-total-ef">$0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">📱 Total transfer.</div>
+        <div class="stat-value v-blue" id="r-total-tr">$0</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ ENTRADAS ══════════ -->
+<div id="page-entradas" class="page">
+
+  <div class="card">
+    <div class="card-title" style="color:var(--blue);">🎫 Cargar reportes de entradas</div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:10px;">Cargá los archivos .xls generados por la app de control de accesos (uno por acceso).</p>
+    <div class="upload-zone" id="ent-zone" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'entradas')">
+      <div class="upload-icon">📂</div>
+      <div class="upload-label">Arrastrá o seleccioná archivos .xls</div>
+      <label class="upload-btn" style="display:inline-block;cursor:pointer;">
+        Seleccionar
+        <input type="file" id="ent-file" multiple accept=".xls,.xlsx,.html,.htm" style="display:none;" onchange="loadEntradasFiles(this.files)">
+      </label>
+    </div>
+    <div id="ent-chips"></div>
+  </div>
+
+  <div class="card" id="ent-resumen-card" style="display:none;">
+    <div class="card-title" style="color:var(--blue);">📊 Resumen consolidado</div>
+    <div class="resumen-grid">
+      <div class="stat-box">
+        <div class="stat-label">💵 Efectivo</div>
+        <div class="stat-value v-green" id="ent-ef">$0</div>
+        <div class="stat-sub" id="ent-ef-cnt">0 personas</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">📱 Transferencia</div>
+        <div class="stat-value v-blue" id="ent-tr">$0</div>
+        <div class="stat-sub" id="ent-tr-cnt">0 personas</div>
+      </div>
+    </div>
+    <div class="stat-box" style="margin-bottom:10px;">
+      <div class="stat-label">💰 Total recaudado</div>
+      <div class="stat-value v-gold" id="ent-total">$0</div>
+      <div class="stat-sub" id="ent-total-cnt">0 personas en total</div>
+    </div>
+    <div class="card-title" style="color:var(--blue);margin-top:4px;">📋 Por turno</div>
+    <div class="turno-resumen" id="ent-por-turno"></div>
+  </div>
+
+  <div class="card" id="ent-detalle-card" style="display:none;">
+    <div class="card-title" style="color:var(--text2);">📋 Detalle de registros</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table" id="ent-table"></table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ BUFFET ══════════ -->
+<div id="page-buffet" class="page">
+
+  <div class="card">
+    <div class="card-title" style="color:var(--orange);">🍰 Cargar reporte de buffet</div>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:10px;">Cargá el archivo .xls generado por la app del buffet al cierre del día.</p>
+    <div class="upload-zone" id="buf-zone" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event,'buffet')">
+      <div class="upload-icon">🍰</div>
+      <div class="upload-label">Arrastrá o seleccioná el archivo .xls</div>
+      <label class="upload-btn" style="background:var(--orange);display:inline-block;cursor:pointer;">
+        Seleccionar
+        <input type="file" id="buf-file" accept=".xls,.xlsx,.html,.htm" style="display:none;" onchange="loadBuffetFile(this.files)">
+      </label>
+    </div>
+    <div id="buf-chips"></div>
+  </div>
+
+  <div class="card" id="buf-resumen-card" style="display:none;">
+    <div class="card-title" style="color:var(--orange);">📊 Resumen buffet</div>
+    <div class="resumen-grid">
+      <div class="stat-box">
+        <div class="stat-label">💵 Efectivo</div>
+        <div class="stat-value v-green" id="buf-ef">$0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">📱 Transferencia</div>
+        <div class="stat-value v-blue" id="buf-tr">$0</div>
+      </div>
+    </div>
+    <div class="stat-box" style="margin-bottom:10px;">
+      <div class="stat-label">🧾 Operaciones</div>
+      <div class="stat-value v-gold" id="buf-ops">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">💰 Total buffet</div>
+      <div class="stat-value v-orange" id="buf-total">$0</div>
+    </div>
+    <div class="card-title" style="color:var(--text2);margin-top:14px;">📋 Detalle</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table" id="buf-table"></table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ INSCRIPCIONES ══════════ -->
+<div id="page-inscripciones" class="page">
+
+  <div class="card">
+    <div class="card-title" style="color:var(--purple);">📝 Agregar club</div>
+    <div class="form-row">
+      <div class="form-group" style="grid-column:span 2;">
+        <label class="form-label">Institución</label>
+        <input class="form-input" id="ins-club" placeholder="Nombre del club / institución">
+      </div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group">
+        <label class="form-label">Turno</label>
+        <select class="form-select" id="ins-turno">
+          <option value="08:30|USAG 2">08:30 — USAG 2</option>
+          <option value="11:45|USAG 1A">11:45 — USAG 1A</option>
+          <option value="13:30|Pulgas">13:30 — Pulgas</option>
+          <option value="14:45|E2 y E3">14:45 — E2/E3</option>
+          <option value="16:15|E1A">16:15 — E1A</option>
+          <option value="18:00|E1B/USAG1B">18:00 — E1B/USAG1B</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nivel</label>
+        <select class="form-select" id="ins-nivel">
+          <option>USAG 2</option>
+          <option>USAG 1A</option>
+          <option>USAG 1B</option>
+          <option>E1A</option>
+          <option>E1B</option>
+          <option>E2</option>
+          <option>E3</option>
+          <option>Pulgas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Categoría</label>
+        <select class="form-select" id="ins-cat">
+          <option>Pre Mini</option>
+          <option>Mini</option>
+          <option>Pre Infantil</option>
+          <option>Infantil</option>
+          <option>Juvenil</option>
+          <option>Mayor</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Cantidad gimnastas</label>
+        <input class="form-input" id="ins-cant" type="number" min="1" placeholder="Ej: 5">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Aparatos</label>
+        <select class="form-select" id="ins-aparatos">
+          <option value="4">4 aparatos — $35.000</option>
+          <option value="2">2 aparatos — $25.000</option>
+          <option value="pulgas">Pulgas — $25.000</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-purple btn-full" onclick="addInscripcion()">➕ Agregar</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--purple);">
+      📋 Clubes inscriptos
+      <span style="margin-left:auto;font-family:'Syne',sans-serif;font-size:14px;" id="ins-total-label">Total: $0</span>
+    </div>
+    <div id="ins-lista">
+      <div class="empty"><div class="empty-icon">📭</div><div class="empty-text">Sin clubes cargados aún</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ EGRESOS ══════════ -->
+<div id="page-egresos" class="page">
+
+  <div class="card">
+    <div class="card-title" style="color:var(--red);">💸 Registrar egreso</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Categoría</label>
+        <select class="form-select" id="eg-cat">
+          <option>🏅 Medallas</option>
+          <option>🎁 Premios / sorteos</option>
+          <option>📄 Fotocopias</option>
+          <option>🖨️ Cartelería</option>
+          <option>📚 Librería</option>
+          <option>🛒 Otros insumos</option>
+          <option>🔧 Servicios</option>
+          <option>📦 Otros</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Monto ($)</label>
+        <input class="form-input" id="eg-monto" type="number" min="1" placeholder="Ej: 50000">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:8px;">
+      <label class="form-label">Descripción</label>
+      <input class="form-input" id="eg-desc" placeholder="Detalle del gasto">
+    </div>
+    <button class="btn btn-red btn-full" onclick="addEgreso()">➕ Registrar egreso</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--red);">
+      📋 Egresos registrados
+      <span style="margin-left:auto;font-family:'Syne',sans-serif;font-size:14px;color:var(--red);" id="eg-total-label">Total: $0</span>
+    </div>
+    <div id="eg-lista">
+      <div class="empty"><div class="empty-icon">✅</div><div class="empty-text">Sin egresos registrados</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ EXPORTAR ══════════ -->
+<div id="page-exportar" class="page">
+
+  <div class="card">
+    <div class="card-title" style="color:var(--gold);">📊 Resumen final del día</div>
+    <div class="export-preview" id="export-preview">Calculando...</div>
+    <button class="btn btn-gold btn-full" onclick="copiarResumen()">📋 Copiar resumen</button>
+    <button class="btn btn-green btn-full" onclick="descargarHTML()">📥 Descargar informe HTML</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:var(--green);">💬 Enviar por WhatsApp</div>
+    <div class="form-group" style="margin-bottom:8px;">
+      <label class="form-label">Número de destino</label>
+      <input class="form-input" id="wa-numero" placeholder="Ej: 5492214000000" type="tel">
+    </div>
+    <button class="btn btn-green btn-full" onclick="enviarWhatsApp()">💬 Enviar resumen</button>
+  </div>
+
+</div>
+
+</div><!-- /pages -->
+
+<!-- ══════════ MODAL PAGO INSCRIPCIÓN ══════════ -->
+<div class="modal" id="modal-pago">
+  <div class="modal-box">
+    <div class="modal-title">💰 Registrar pago</div>
+    <div id="modal-pago-info" style="font-size:13px;color:var(--text2);margin-bottom:12px;"></div>
+    <div class="form-group" style="margin-bottom:8px;">
+      <label class="form-label">Monto recibido ($)</label>
+      <input class="form-input" id="modal-pago-monto" type="number" placeholder="Ingresá el monto">
+    </div>
+    <div class="form-group" style="margin-bottom:8px;">
+      <label class="form-label">Método</label>
+      <select class="form-select" id="modal-pago-metodo">
+        <option value="efectivo">💵 Efectivo</option>
+        <option value="transferencia">📱 Transferencia</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-gray" style="flex:1;" onclick="closeModal('modal-pago')">Cancelar</button>
+      <button class="btn btn-green" style="flex:1;" onclick="confirmarPago()">✅ Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  ESTADO GLOBAL
+// ═══════════════════════════════════════
+const STORAGE = 'partenon2026';
+let state = loadState();
+
+function loadState(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE)) || defaultState(); }
+  catch(e){ return defaultState(); }
+}
+function defaultState(){
+  return {
+    entradas:{ archivos:[], ef:0, tr:0, personas:0, total:0, porTurno:{}, detalle:[] },
+    buffet:{ archivo:'', ef:0, tr:0, ops:0, total:0, detalle:[] },
+    inscripciones:[], // [{id, club, turno, nivel, cat, cant, aparatos, monto, pagado, metodoPago}]
+    egresos:[] // [{id, cat, monto, desc, fecha}]
+  };
+}
+function save(){ localStorage.setItem(STORAGE, JSON.stringify(state)); }
+
+// ═══════════════════════════════════════
+//  NAVEGACIÓN
+// ═══════════════════════════════════════
+const tabColors = {resumen:'t-gold',entradas:'t-blue',buffet:'t-orange',inscripciones:'t-purple',egresos:'t-red',exportar:'t-gold'};
+function goTab(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active','t-green','t-blue','t-orange','t-purple','t-red','t-gold'));
+  document.getElementById('page-'+id).classList.add('active');
+  btn.classList.add('active', tabColors[id]||'');
+  if(id==='exportar') buildExportPreview();
+}
+
+// ═══════════════════════════════════════
+//  CLOCK
+// ═══════════════════════════════════════
+function updateClock(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}); }
+setInterval(updateClock,1000); updateClock();
+
+// ═══════════════════════════════════════
+//  PARSERS — leer HTML generado por las apps
+// ═══════════════════════════════════════
+function parseEntradasHTML(html){
+  const p = new DOMParser().parseFromString(html,'text/html');
+  const tables = p.querySelectorAll('table');
+  let ef=0,tr=0,personas=0,total=0,porTurno={},detalle=[];
+  // Tabla de resumen (summary-table): filas td
+  tables.forEach(tbl=>{
+    const rows = tbl.querySelectorAll('tr');
+    rows.forEach(row=>{
+      const tds = row.querySelectorAll('td');
+      if(tds.length>=2){
+        const label = tds[0].textContent.trim();
+        const val = parseInt(tds[1].textContent.replace(/[^0-9]/g,''))||0;
+        if(label.includes('Efectivo') && !label.includes('Total')){ ef=val; }
+        if(label.includes('Transferencia') && !label.includes('Total')){ tr=val; }
+        if(label.includes('Total personas')){ personas=val; }
+        if(label.includes('TOTAL RECAUDADO')){ total=parseInt(tds[tds.length-1].textContent.replace(/[^0-9]/g,''))||0; }
+      }
+      // detalle: #, Método, Hora, Categoría, Turno, Acceso, Controlador
+      if(tds.length>=6){
+        const metodo = tds[1].textContent.trim();
+        if(metodo && (metodo.toLowerCase().includes('efectivo')||metodo.toLowerCase().includes('transfer'))){
+          const turno = (tds[4]||tds[3]).textContent.trim();
+          const key = turno || 'Sin turno';
+          if(!porTurno[key]) porTurno[key]={ef:0,tr:0,total:0,personas:0};
+          const precio = metodo.toLowerCase().includes('transfer') ? 10007 : 10000;
+          porTurno[key].personas++;
+          porTurno[key].total += precio;
+          if(metodo.toLowerCase().includes('transfer')) porTurno[key].tr+=precio;
+          else porTurno[key].ef+=precio;
+          detalle.push({
+            metodo: metodo.toLowerCase().includes('transfer')?'Transferencia':'Efectivo',
+            hora: (tds[2]||tds[1]).textContent.trim(),
+            categoria: (tds[3]||{textContent:''}).textContent.trim(),
+            turno: key,
+            acceso: (tds[5]||{textContent:''}).textContent.trim(),
+            controlador: (tds[6]||{textContent:''}).textContent.trim()
+          });
+        }
+      }
+    });
+  });
+  // Si total sigue en 0, calculamos
+  if(total===0) total = ef*10000 + tr*10007;
+  return {ef, tr, personas: personas||detalle.length, total, porTurno, detalle};
+}
+
+function parseBuffetHTML(html){
+  const p = new DOMParser().parseFromString(html,'text/html');
+  const tables = p.querySelectorAll('table');
+  let ef=0,tr=0,ops=0,total=0,detalle=[];
+  tables.forEach(tbl=>{
+    const rows = tbl.querySelectorAll('tr');
+    rows.forEach(row=>{
+      const tds = row.querySelectorAll('td');
+      if(tds.length>=2){
+        const label = tds[0].textContent.trim();
+        const raw = tds[1].textContent.replace(/[^0-9.,]/g,'').replace(',','');
+        const val = parseFloat(raw)||0;
+        if(label.includes('Efectivo')) ef=val;
+        if(label.includes('Transferencia')) tr=val;
+        if(label.includes('Operaciones')) ops=parseInt(raw)||0;
+        if(label.includes('TOTAL')) total=val;
+      }
+      // detalle: #, Tipo, Hora, Monto, Descripción, Cobrador
+      if(tds.length>=5){
+        const tipo = tds[1].textContent.trim();
+        if(tipo && (tipo.toLowerCase().includes('efectivo')||tipo.toLowerCase().includes('transfer'))){
+          const rawMonto = tds[3].textContent.replace(/[^0-9.,]/g,'').replace(',','');
+          const monto = parseFloat(rawMonto)||0;
+          if(monto>0){
+            detalle.push({
+              tipo: tipo.toLowerCase().includes('transfer')?'Transferencia':'Efectivo',
+              hora: tds[2].textContent.trim(),
+              monto,
+              descripcion: tds[4].textContent.trim(),
+              cobrador: (tds[5]||{textContent:''}).textContent.trim()
+            });
+          }
+        }
+      }
+    });
+  });
+  if(total===0) total=ef+tr;
+  return {ef, tr, ops: ops||detalle.length, total, detalle};
+}
+
+// ═══════════════════════════════════════
+//  ENTRADAS — carga de archivos
+// ═══════════════════════════════════════
+function handleDrop(e,tipo){ e.preventDefault(); document.getElementById(tipo==='entradas'?'ent-zone':'buf-zone').classList.remove('drag'); if(tipo==='entradas') loadEntradasFiles(e.dataTransfer.files); else loadBuffetFile(e.dataTransfer.files); }
+
+function loadEntradasFiles(files){
+  if(!files||!files.length) return;
+  Array.from(files).forEach(f=>{
+    const r = new FileReader();
+    r.onload = e=>{
+      const parsed = parseEntradasHTML(e.target.result);
+      // Merge con lo existente
+      state.entradas.ef += parsed.ef;
+      state.entradas.tr += parsed.tr;
+      state.entradas.personas += parsed.personas;
+      state.entradas.total += parsed.total;
+      state.entradas.detalle = state.entradas.detalle.concat(parsed.detalle);
+      // Merge porTurno
+      Object.entries(parsed.porTurno).forEach(([k,v])=>{
+        if(!state.entradas.porTurno[k]) state.entradas.porTurno[k]={ef:0,tr:0,total:0,personas:0};
+        state.entradas.porTurno[k].ef += v.ef;
+        state.entradas.porTurno[k].tr += v.tr;
+        state.entradas.porTurno[k].total += v.total;
+        state.entradas.porTurno[k].personas += v.personas;
+      });
+      if(!state.entradas.archivos.includes(f.name)) state.entradas.archivos.push(f.name);
+      save(); renderEntradas();
+    };
+    r.readAsText(f,'UTF-8');
+  });
+}
+
+function renderEntradas(){
+  const e = state.entradas;
+  // chips
+  document.getElementById('ent-chips').innerHTML = e.archivos.map((n,i)=>`<span class="file-chip">📄 ${n} <button onclick="removeEntradaFile(${i})">✕</button></span>`).join('');
+  document.getElementById('ent-zone').classList.toggle('loaded', e.archivos.length>0);
+  // resumen
+  const hasData = e.total>0||e.personas>0||e.archivos.length>0;
+  document.getElementById('ent-resumen-card').style.display = hasData?'block':'none';
+  document.getElementById('ent-detalle-card').style.display = hasData&&e.detalle.length?'block':'none';
+  document.getElementById('ent-ef').textContent = '$'+e.ef.toLocaleString('es-AR');
+  document.getElementById('ent-ef-cnt').textContent = e.ef>0?Math.round(e.ef/10000)+' personas':'0 personas';
+  document.getElementById('ent-tr').textContent = '$'+e.tr.toLocaleString('es-AR');
+  document.getElementById('ent-tr-cnt').textContent = e.tr>0?Math.round(e.tr/10007)+' personas':'0 personas';
+  document.getElementById('ent-total').textContent = '$'+e.total.toLocaleString('es-AR');
+  document.getElementById('ent-total-cnt').textContent = e.personas+' personas en total';
+  // por turno
+  const turnosOrden = ['08:30 - 11:30 | USAG 2','11:45 - 13:15 | USAG 1 A','13:30 - 14:30 | PULGAS','14:45 - 16:00 | E2 Y E3','16:15 - 17:45 | E1 A','18:00 - 20:30 | E1 B / USAG 1 B'];
+  let turnoHTML = '';
+  if(Object.keys(e.porTurno).length){
+    turnosOrden.forEach(t=>{
+      const d = e.porTurno[t];
+      if(d) turnoHTML += `<div class="turno-row"><span class="turno-name">${t}</span><span class="turno-amt">$${d.total.toLocaleString('es-AR')} <span style="color:var(--text2);font-size:10px;">(${d.personas}p)</span></span></div>`;
+    });
+    Object.entries(e.porTurno).forEach(([k,d])=>{ if(!turnosOrden.includes(k)) turnoHTML+=`<div class="turno-row"><span class="turno-name">${k}</span><span class="turno-amt">$${d.total.toLocaleString('es-AR')}</span></div>`; });
+  } else { turnoHTML = '<div class="turno-row"><span class="turno-name">Sin datos de turno</span><span class="turno-amt">—</span></div>'; }
+  document.getElementById('ent-por-turno').innerHTML = turnoHTML;
+  // tabla detalle
+  if(e.detalle.length){
+    let rows = e.detalle.slice(0,50).map(d=>`<tr><td><span class="badge ${d.metodo==='Efectivo'?'badge-green':'badge-blue'}">${d.metodo}</span></td><td>${d.hora}</td><td>${d.turno}</td><td>${d.acceso}</td><td>${d.controlador}</td></tr>`).join('');
+    document.getElementById('ent-table').innerHTML = `<thead><tr><th>Método</th><th>Hora</th><th>Turno</th><th>Acceso</th><th>Controlador</th></tr></thead><tbody>${rows}</tbody>`;
+    if(e.detalle.length>50) document.getElementById('ent-table').innerHTML += `<tfoot><tr><td colspan="5" style="text-align:center;color:var(--text2);padding:8px;">... y ${e.detalle.length-50} registros más</td></tr></tfoot>`;
+  }
+  updateResumen();
+}
+
+function removeEntradaFile(idx){
+  state.entradas = defaultState().entradas;
+  save(); renderEntradas();
+  document.getElementById('ent-chips').innerHTML='';
+  document.getElementById('ent-resumen-card').style.display='none';
+  document.getElementById('ent-detalle-card').style.display='none';
+}
+
+// ═══════════════════════════════════════
+//  BUFFET — carga de archivo
+// ═══════════════════════════════════════
+function loadBuffetFile(files){
+  if(!files||!files.length) return;
+  const f = files[0];
+  const r = new FileReader();
+  r.onload = e=>{
+    const parsed = parseBuffetHTML(e.target.result);
+    state.buffet = { archivo:f.name, ...parsed };
+    save(); renderBuffet();
+  };
+  r.readAsText(f,'UTF-8');
+}
+
+function renderBuffet(){
+  const b = state.buffet;
+  document.getElementById('buf-chips').innerHTML = b.archivo?`<span class="file-chip">📄 ${b.archivo} <button onclick="removeBuffet()">✕</button></span>`:'';
+  document.getElementById('buf-zone').classList.toggle('loaded', !!b.archivo);
+  const hasData = b.total>0||b.archivo;
+  document.getElementById('buf-resumen-card').style.display = hasData?'block':'none';
+  document.getElementById('buf-ef').textContent = '$'+b.ef.toLocaleString('es-AR');
+  document.getElementById('buf-tr').textContent = '$'+b.tr.toLocaleString('es-AR');
+  document.getElementById('buf-ops').textContent = b.ops;
+  document.getElementById('buf-total').textContent = '$'+b.total.toLocaleString('es-AR');
+  if(b.detalle&&b.detalle.length){
+    let rows = b.detalle.map(d=>`<tr><td><span class="badge ${d.tipo==='Efectivo'?'badge-green':'badge-blue'}">${d.tipo}</span></td><td>${d.hora}</td><td>$${d.monto.toLocaleString('es-AR')}</td><td>${d.descripcion}</td><td>${d.cobrador}</td></tr>`).join('');
+    document.getElementById('buf-table').innerHTML = `<thead><tr><th>Tipo</th><th>Hora</th><th>Monto</th><th>Descripción</th><th>Cobrador</th></tr></thead><tbody>${rows}</tbody>`;
+  }
+  updateResumen();
+}
+function removeBuffet(){ state.buffet=defaultState().buffet; save(); renderBuffet(); }
+
+// ═══════════════════════════════════════
+//  INSCRIPCIONES
+// ═══════════════════════════════════════
+const PRECIOS = {'4':35000,'2':25000,'pulgas':25000};
+let pagoModalId = null;
+
+function addInscripcion(){
+  const club = document.getElementById('ins-club').value.trim();
+  const turno = document.getElementById('ins-turno').value;
+  const nivel = document.getElementById('ins-nivel').value;
+  const cat = document.getElementById('ins-cat').value;
+  const cant = parseInt(document.getElementById('ins-cant').value)||0;
+  const aparatos = document.getElementById('ins-aparatos').value;
+  if(!club||cant<1){ alert('Completá el nombre del club y la cantidad'); return; }
+  const precioUnit = PRECIOS[aparatos];
+  const monto = precioUnit * cant;
+  state.inscripciones.push({
+    id: Date.now(), club, turno: turno.split('|')[1]||turno, turnoHora: turno.split('|')[0],
+    nivel, cat, cant, aparatos, precioUnit, monto, pagado:0, metodoPago:''
+  });
+  document.getElementById('ins-club').value='';
+  document.getElementById('ins-cant').value='';
+  save(); renderInscripciones();
+}
+
+function renderInscripciones(){
+  const lista = state.inscripciones;
+  if(!lista.length){
+    document.getElementById('ins-lista').innerHTML='<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">Sin clubes cargados aún</div></div>';
+    document.getElementById('ins-total-label').textContent='Total: $0';
+    updateResumen(); return;
+  }
+  // Agrupar por club
+  const porClub = {};
+  lista.forEach(i=>{ if(!porClub[i.club]) porClub[i.club]=[]; porClub[i.club].push(i); });
+  let totalGlobal=0;
+  let html='';
+  Object.entries(porClub).forEach(([club,items])=>{
+    const totalClub = items.reduce((s,i)=>s+i.monto,0);
+    const pagadoClub = items.reduce((s,i)=>s+i.pagado,0);
+    totalGlobal += totalClub;
+    const deuda = totalClub - pagadoClub;
+    const statusColor = deuda<=0?'v-green': pagadoClub>0?'v-gold':'v-red';
+    html += `<div class="club-card">
+      <div class="club-header" onclick="toggleClub('club-${club.replace(/\s/g,'_')}')">
+        <div>
+          <div class="club-nombre">🏛️ ${club}</div>
+          <div style="font-size:10px;color:var(--text2);">${items.length} entrada(s) · ${items.reduce((s,i)=>s+i.cant,0)} gimnastas</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="club-deuda ${statusColor}">$${deuda<=0?'0':deuda.toLocaleString('es-AR')}</div>
+          <div style="font-size:10px;color:var(--text2);">deuda</div>
+        </div>
+      </div>
+      <div class="club-body" id="club-${club.replace(/\s/g,'_')}">
+        ${items.map(i=>{
+          const saldo = i.monto - i.pagado;
+          const statusClass = saldo<=0?'pago-completo':i.pagado>0?'pago-parcial':'pago-pendiente';
+          const statusLabel = saldo<=0?'✅ Pagado':i.pagado>0?'⚠️ Parcial':'❌ Pendiente';
+          return `<div class="nivel-row">
+            <div>
+              <span class="badge badge-purple">${i.nivel}</span>
+              <span style="font-size:11px;margin-left:4px;">${i.cat} · ${i.cant} gimnastas</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:11px;color:var(--text2);">$${i.monto.toLocaleString('es-AR')}</span>
+              <span class="pago-status ${statusClass}" onclick="openPagoModal(${i.id})">${statusLabel}</span>
+            </div>
+          </div>`;
+        }).join('')}
+        <div style="padding:8px 0;display:flex;justify-content:space-between;font-size:11px;">
+          <span style="color:var(--text2);">Total club: <strong style="color:var(--text);">$${totalClub.toLocaleString('es-AR')}</strong></span>
+          <span style="color:var(--text2);">Cobrado: <strong style="color:var(--green);">$${pagadoClub.toLocaleString('es-AR')}</strong></span>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('ins-lista').innerHTML = html;
+  document.getElementById('ins-total-label').textContent = 'Total: $'+totalGlobal.toLocaleString('es-AR');
+  updateResumen();
+}
+
+function toggleClub(id){ const el=document.getElementById(id); if(el) el.classList.toggle('open'); }
+
+function openPagoModal(id){
+  pagoModalId = id;
+  const item = state.inscripciones.find(i=>i.id===id);
+  if(!item) return;
+  const saldo = item.monto - item.pagado;
+  document.getElementById('modal-pago-info').innerHTML = `<strong>${item.club}</strong> — ${item.nivel} ${item.cat}<br>${item.cant} gimnastas · Precio unitario: $${item.precioUnit.toLocaleString('es-AR')}<br>Total: $${item.monto.toLocaleString('es-AR')} · Cobrado: $${item.pagado.toLocaleString('es-AR')} · <strong>Saldo: $${saldo.toLocaleString('es-AR')}</strong>`;
+  document.getElementById('modal-pago-monto').value = saldo>0?saldo:'';
+  document.getElementById('modal-pago').classList.add('active');
+}
+
+function confirmarPago(){
+  const monto = parseFloat(document.getElementById('modal-pago-monto').value)||0;
+  const metodo = document.getElementById('modal-pago-metodo').value;
+  if(monto<=0){ alert('Ingresá un monto válido'); return; }
+  const item = state.inscripciones.find(i=>i.id===pagoModalId);
+  if(item){ item.pagado += monto; item.metodoPago = metodo; }
+  save(); renderInscripciones(); closeModal('modal-pago');
+}
+
+// ═══════════════════════════════════════
+//  EGRESOS
+// ═══════════════════════════════════════
+function addEgreso(){
+  const cat = document.getElementById('eg-cat').value;
+  const monto = parseFloat(document.getElementById('eg-monto').value)||0;
+  const desc = document.getElementById('eg-desc').value.trim();
+  if(monto<=0){ alert('Ingresá un monto válido'); return; }
+  state.egresos.push({ id:Date.now(), cat, monto, desc:desc||cat, fecha:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}) });
+  document.getElementById('eg-monto').value='';
+  document.getElementById('eg-desc').value='';
+  save(); renderEgresos();
+}
+
+function deleteEgreso(id){ if(!confirm('¿Eliminar este egreso?')) return; state.egresos = state.egresos.filter(e=>e.id!==id); save(); renderEgresos(); }
+
+function renderEgresos(){
+  const lista = state.egresos;
+  const total = lista.reduce((s,e)=>s+e.monto,0);
+  document.getElementById('eg-total-label').textContent = 'Total: $'+total.toLocaleString('es-AR');
+  if(!lista.length){
+    document.getElementById('eg-lista').innerHTML='<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">Sin egresos registrados</div></div>';
+    updateResumen(); return;
+  }
+  document.getElementById('eg-lista').innerHTML = lista.map(e=>`
+    <div class="egreso-item">
+      <div class="egreso-cat">
+        <span class="badge badge-red">${e.cat}</span>
+        <div>
+          <div style="font-size:12px;">${e.desc}</div>
+          <div style="font-size:10px;color:var(--text2);">${e.fecha}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="egreso-monto">$${e.monto.toLocaleString('es-AR')}</span>
+        <button class="egreso-delete" onclick="deleteEgreso(${e.id})">🗑️</button>
+      </div>
+    </div>`).join('');
+  updateResumen();
+}
+
+// ═══════════════════════════════════════
+//  RESUMEN GLOBAL
+// ═══════════════════════════════════════
+function updateResumen(){
+  const e = state.entradas;
+  const b = state.buffet;
+  const ins = state.inscripciones;
+  const eg = state.egresos;
+
+  const totalEntradas = e.total||0;
+  const totalBuffet = b.total||0;
+  const totalIns = ins.reduce((s,i)=>s+i.pagado,0);
+  const totalEg = eg.reduce((s,e)=>s+e.monto,0);
+  const totalIngresos = totalEntradas + totalBuffet + totalIns;
+  const saldo = totalIngresos - totalEg;
+
+  // Totales efectivo/transferencia
+  const efEntradas = e.ef||0;
+  const trEntradas = e.tr||0;
+  const efBuffet = b.ef||0;
+  const trBuffet = b.tr||0;
+  const efIns = ins.filter(i=>i.metodoPago==='efectivo').reduce((s,i)=>s+i.pagado,0);
+  const trIns = ins.filter(i=>i.metodoPago==='transferencia').reduce((s,i)=>s+i.pagado,0);
+  const totalEf = efEntradas + efBuffet + efIns;
+  const totalTr = trEntradas + trBuffet + trIns;
+
+  document.getElementById('r-entradas').textContent = '$'+totalEntradas.toLocaleString('es-AR');
+  document.getElementById('r-entradas-sub').textContent = e.personas+' personas';
+  document.getElementById('r-buffet').textContent = '$'+totalBuffet.toLocaleString('es-AR');
+  document.getElementById('r-buffet-sub').textContent = b.ops+' operaciones';
+  document.getElementById('r-inscripciones').textContent = '$'+totalIns.toLocaleString('es-AR');
+  document.getElementById('r-inscripciones-sub').textContent = ins.filter(i=>i.pagado>0).length+' cobradas';
+  document.getElementById('r-egresos').textContent = '$'+totalEg.toLocaleString('es-AR');
+  document.getElementById('r-egresos-sub').textContent = eg.length+' registros';
+  document.getElementById('r-saldo').textContent = '$'+Math.abs(saldo).toLocaleString('es-AR');
+  const sb = document.getElementById('saldo-box');
+  sb.classList.toggle('negativo', saldo<0);
+  document.getElementById('r-total-ef').textContent = '$'+totalEf.toLocaleString('es-AR');
+  document.getElementById('r-total-tr').textContent = '$'+totalTr.toLocaleString('es-AR');
+
+  // Turno resumen en resumen
+  const turnosOrden = ['08:30 - 11:30 | USAG 2','11:45 - 13:15 | USAG 1 A','13:30 - 14:30 | PULGAS','14:45 - 16:00 | E2 Y E3','16:15 - 17:45 | E1 A','18:00 - 20:30 | E1 B / USAG 1 B'];
+  let turnoHTML = '';
+  let hasTurnos = false;
+  turnosOrden.forEach(t=>{
+    const d = e.porTurno[t];
+    if(d){ hasTurnos=true; turnoHTML+=`<div class="turno-row"><span class="turno-name">${t}</span><span class="turno-amt">$${d.total.toLocaleString('es-AR')} <span style="color:var(--text2);font-size:10px;">(${d.personas}p)</span></span></div>`; }
+  });
+  if(!hasTurnos) turnoHTML='<div class="turno-row"><span class="turno-name">Sin datos de turnos aún</span><span class="turno-amt">—</span></div>';
+  document.getElementById('turno-resumen').innerHTML = turnoHTML;
+}
+
+// ═══════════════════════════════════════
+//  EXPORTAR
+// ═══════════════════════════════════════
+function buildExportPreview(){
+  const e = state.entradas, b = state.buffet;
+  const ins = state.inscripciones, eg = state.egresos;
+  const totalEntradas = e.total||0;
+  const totalBuffet = b.total||0;
+  const totalIns = ins.reduce((s,i)=>s+i.pagado,0);
+  const totalEg = eg.reduce((s,e)=>s+e.monto,0);
+  const totalIngresos = totalEntradas + totalBuffet + totalIns;
+  const saldo = totalIngresos - totalEg;
+
+  const txt = `═══════════════════════════════════
+  TORNEO PARTENÓN 2026
+  Resumen del día — 27 de junio de 2026
+═══════════════════════════════════
+
+INGRESOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎫 Entradas:       $${totalEntradas.toLocaleString('es-AR')} (${e.personas} personas)
+🍰 Buffet:         $${totalBuffet.toLocaleString('es-AR')} (${b.ops} operaciones)
+📝 Inscripciones:  $${totalIns.toLocaleString('es-AR')}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 TOTAL INGRESOS: $${totalIngresos.toLocaleString('es-AR')}
+
+EGRESOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${eg.length?eg.map(e=>`${e.cat}: $${e.monto.toLocaleString('es-AR')} (${e.desc})`).join('\n'):'Sin egresos registrados'}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💸 TOTAL EGRESOS:  $${totalEg.toLocaleString('es-AR')}
+
+${saldo>=0?'✅':'⚠️'} SALDO DEL DÍA:   $${saldo.toLocaleString('es-AR')}
+
+EFECTIVO VS TRANSFERENCIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${Object.entries(e.porTurno).map(([t,d])=>`${t}: $${d.total.toLocaleString('es-AR')} (${d.personas}p)`).join('\n')||'Sin datos de turnos'}
+
+Generado: ${new Date().toLocaleString('es-AR')}`;
+  document.getElementById('export-preview').textContent = txt;
+}
+
+function copiarResumen(){
+  navigator.clipboard.writeText(document.getElementById('export-preview').textContent).then(()=>alert('✅ Resumen copiado al portapapeles'));
+}
+
+function descargarHTML(){
+  const e=state.entradas, b=state.buffet;
+  const ins=state.inscripciones, eg=state.egresos;
+  const totalEntradas=e.total||0, totalBuffet=b.total||0;
+  const totalIns=ins.reduce((s,i)=>s+i.pagado,0);
+  const totalEg=eg.reduce((s,e)=>s+e.monto,0);
+  const totalIngresos=totalEntradas+totalBuffet+totalIns;
+  const saldo=totalIngresos-totalEg;
+
+  const html=`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Partenón 2026 — Informe final</title>
+  <style>body{font-family:sans-serif;max-width:900px;margin:30px auto;background:#f8fafc;}h1{color:#1e3a5f;}h2{color:#3b82f6;border-bottom:2px solid #e2e8f0;padding-bottom:8px;}table{width:100%;border-collapse:collapse;margin-bottom:20px;}th{background:#3b82f6;color:#fff;padding:10px;text-align:left;}td{padding:8px;border-bottom:1px solid #e2e8f0;}.total{font-weight:800;font-size:18px;color:#10b981;}.saldo{font-size:22px;font-weight:900;color:${saldo>=0?'#10b981':'#ef4444'};}</style>
+  </head><body>
+  <h1>🏛️ Torneo Partenón 2026 — Informe Final</h1>
+  <p>Generado: ${new Date().toLocaleString('es-AR')}</p>
+  <h2>📊 Resumen económico</h2>
+  <table><tr><th>Concepto</th><th>Monto</th></tr>
+  <tr><td>🎫 Entradas (${e.personas} personas)</td><td>$${totalEntradas.toLocaleString('es-AR')}</td></tr>
+  <tr><td>🍰 Buffet (${b.ops} operaciones)</td><td>$${totalBuffet.toLocaleString('es-AR')}</td></tr>
+  <tr><td>📝 Inscripciones cobradas</td><td>$${totalIns.toLocaleString('es-AR')}</td></tr>
+  <tr><td><strong>💰 Total ingresos</strong></td><td><strong>$${totalIngresos.toLocaleString('es-AR')}</strong></td></tr>
+  <tr><td>💸 Total egresos</td><td>$${totalEg.toLocaleString('es-AR')}</td></tr>
+  <tr><td><strong>Saldo del día</strong></td><td class="saldo">$${saldo.toLocaleString('es-AR')}</td></tr>
+  </table>
+  <h2>🎫 Entradas por turno</h2>
+  <table><tr><th>Turno</th><th>Personas</th><th>Recaudado</th></tr>
+  ${Object.entries(e.porTurno).map(([t,d])=>`<tr><td>${t}</td><td>${d.personas}</td><td>$${d.total.toLocaleString('es-AR')}</td></tr>`).join('')||'<tr><td colspan="3">Sin datos</td></tr>'}
+  </table>
+  <h2>📝 Inscripciones por club</h2>
+  <table><tr><th>Club</th><th>Nivel</th><th>Categoría</th><th>Gimnastas</th><th>Total</th><th>Cobrado</th></tr>
+  ${ins.map(i=>`<tr><td>${i.club}</td><td>${i.nivel}</td><td>${i.cat}</td><td>${i.cant}</td><td>$${i.monto.toLocaleString('es-AR')}</td><td>$${i.pagado.toLocaleString('es-AR')}</td></tr>`).join('')||'<tr><td colspan="6">Sin datos</td></tr>'}
+  </table>
+  <h2>💸 Egresos</h2>
+  <table><tr><th>Categoría</th><th>Descripción</th><th>Monto</th><th>Hora</th></tr>
+  ${eg.map(e=>`<tr><td>${e.cat}</td><td>${e.desc}</td><td>$${e.monto.toLocaleString('es-AR')}</td><td>${e.fecha}</td></tr>`).join('')||'<tr><td colspan="4">Sin egresos</td></tr>'}
+  </table>
+  </body></html>`;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`Partenon2026_Informe_${new Date().toISOString().slice(0,10)}.html`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function enviarWhatsApp(){
+  const num = document.getElementById('wa-numero').value.trim();
+  if(!num){ alert('Ingresá el número de WhatsApp'); return; }
+  const txt = document.getElementById('export-preview').textContent;
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(txt)}`,'_blank');
+}
+
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+
+// ═══════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════
+renderEntradas();
+renderBuffet();
+renderInscripciones();
+renderEgresos();
+updateResumen();
+</script>
+</body>
+</html>
